@@ -14,7 +14,7 @@ variables:
   imageRepository: 'spotifyui'
   containerRegistry: 'spotifyui.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile.react'
-  tag: '$(Build.BuildId)'
+  tag: '$(Build.BuildNumber)'
 
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
