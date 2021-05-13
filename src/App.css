@@ -1,16 +1,5 @@
 .App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+  text-align: left;
 }
 
 .App-header {
@@ -18,21 +7,56 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: left;
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  padding: 50px;
 }
 
-.App-link {
-  color: #61dafb;
+.dropdown-toggle.noCaret:after {
+  display: none;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.dropdown-menu.show {
+  background-color: #5a6268;
+  padding:0px;
+}
+
+.dropdown-item.dropdownStyle {
+  color: #fff;
+  background-color: #5a6268;
+}
+
+.ten {
+  width: 10%;
+}
+
+.imgDimensions {
+  width: 60px;
+  height: 60px;
+}
+
+.playlistDropdown button {
+  background-color: #5a6268;
+  border: none;
+}
+
+.playlistDropdown.show>.btn-secondary.dropdown-toggle {
+  background-color: #5a6268;
+  border: none;
+}
+
+.playlistDropdown.show>.btn-secondary.dropdown-toggle:focus {
+  box-shadow: none;
+}
+
+.playlistDropdown.show>.btn-secondary:focus {
+  background-color: #5a6268;
+  border: none;
+  box-shadow: none;
+}
+
+.btn:focus {
+  box-shadow: none;
 }
