@@ -1,15 +1,12 @@
 import React from 'react';
 import './App.css';
-import Tracks from './tracks/Tracks';
+import TrackSearch from './tracksearch/TrackSearch'
 
 function App(props:any) {
   return (
     <div className="App">
       <header className="App-header">
-        <p>
-          Hello, {props.name}
-        </p>   
-        <Tracks/>     
+        <TrackSearch />    
       </header>
     </div>
   );

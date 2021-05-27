@@ -1,3 +1,4 @@
+import React from 'react';
 import TrackMenu from '../trackmenu/TrackMenu';
 //import Image from "react-bootstrap/Image";
 
