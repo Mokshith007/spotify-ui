@@ -2,7 +2,7 @@ import React from 'react';
 import SearchBar from '../searchbar/SearchBar';
 import Tracks from '../tracks/Tracks';
 import TrackModel from '../track/TrackModel';
-
+import api from "../api/apis"
 class TrackSearch extends React.Component<{}, { searchText: string, tracks: Array<TrackModel> }> {
     constructor(props: any) {
         super(props);
@@ -15,18 +15,15 @@ class TrackSearch extends React.Component<{}, { searchText: string, tracks: Arra
     }
 
     componentDidMount() {
-        fetch('http://spotifytracks.eastus.azurecontainer.io:8080/getTracks')
+        api.getAllTracks()
             .then(res => res.json())
             .then((result) => {
                 this.setState({
                     tracks: result
                 });
-            },
-            // Note: it's important to handle errors here
-            // instead of a catch() block so that we don't swallow
-            // exceptions from actual bugs in components.
-            (error) => {
-              console.log("Error occurred while fetching songs");
+            })
+            .catch(error => {
+                console.log("Error occurred while fetching songs",error);
             });
     }
 
@@ -38,18 +35,15 @@ class TrackSearch extends React.Component<{}, { searchText: string, tracks: Arra
     }
 
     searchTracks(searchText: string) {
-        fetch('http://spotifytracks.eastus.azurecontainer.io:8080/track/search/findByTrackNameLike?name=' + searchText)
+        api.getTracksByName(searchText)
             .then(res => res.json())
             .then((result) => {
                 this.setState({
                     tracks: result._embedded.track
                 });
-            },
-            // Note: it's important to handle errors here
-            // instead of a catch() block so that we don't swallow
-            // exceptions from actual bugs in components.
-            (error) => {
-              console.log("Error occurred while fetching songs");
+            })
+            .catch(error => {
+                  console.log("Error occurred while fetching song by name",error);
             });
     }
 
