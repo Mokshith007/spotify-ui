@@ -42,7 +42,7 @@ class TrackSearch extends React.Component<{}, { searchText: string, tracks: Arra
             .then(res => res.json())
             .then((result) => {
                 this.setState({
-                    tracks: result.embedded.track
+                    tracks: result._embedded.track
                 });
             },
             // Note: it's important to handle errors here
