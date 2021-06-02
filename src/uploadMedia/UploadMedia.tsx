@@ -56,7 +56,7 @@ const UploadMedia: FC = () => {
     const formData = new FormData();
     formData.append("file", fileSelected);
     axios
-    .post<IPost[]>("http://10.0.0.4:8080/media", formData,{
+    .post<IPost[]>("http://managemedia.eastus.azurecontainer.io:8080/media", formData,{
       headers: {
         'Content-Type': 'multipart/form-data'
       },
