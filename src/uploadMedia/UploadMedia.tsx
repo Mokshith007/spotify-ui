@@ -160,5 +160,4 @@ const UploadMedia: FC = () => {
 
 }
 
-
 export default UploadMedia;
