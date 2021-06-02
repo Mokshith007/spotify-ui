@@ -6,7 +6,6 @@ import axios from 'axios';
 import ReactJWPlayer from 'react-jw-player';
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
-import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 
@@ -57,7 +56,7 @@ const UploadMedia: FC = () => {
     const formData = new FormData();
     formData.append("file", fileSelected);
     axios
-    .post<IPost[]>("http://52.154.68.136:8080/", formData,{
+    .post<IPost[]>("http://52.154.68.136:8080/media", formData,{
       headers: {
         'Content-Type': 'multipart/form-data'
       },
