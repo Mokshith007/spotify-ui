@@ -76,7 +76,7 @@ const UploadMedia: FC = () => {
       setLoading(false);
       setUploadStatus(false);
 
-      console.log("Error "+ error);
+      console.log("Error "+ error); 
     });
     }
   }
