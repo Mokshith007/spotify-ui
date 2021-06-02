@@ -60,7 +60,7 @@ const UploadMedia: FC = () => {
       headers: {
         'Content-Type': 'multipart/form-data'
       },
-    })
+    }) 
     .then(response => {
       setPosts(response.data);
       setLoading(false);
