@@ -24,7 +24,7 @@ function App(props:any) {
   );
 
   function AddMedia() {
-  return (<div><h2>Add Media</h2>
+  return (<div>
     <UploadMedia />
     </div>
     );

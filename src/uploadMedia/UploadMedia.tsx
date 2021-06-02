@@ -57,7 +57,7 @@ const UploadMedia: FC = () => {
     const formData = new FormData();
     formData.append("file", fileSelected);
     axios
-    .post<IPost[]>("http://localhost:8080/", formData,{
+    .post<IPost[]>("http://52.154.68.136:8080/", formData,{
       headers: {
         'Content-Type': 'multipart/form-data'
       },
@@ -85,12 +85,17 @@ const UploadMedia: FC = () => {
 
   return (
     <>
-  <CssBaseline />
-      <Container maxWidth="md">
-        <Typography component="div" style={{ backgroundColor: 'white', height: '40vh' }} >
+      <Container maxWidth="md" style={{ backgroundColor: 'black', paddingTop: 30}}>
+        <Typography component="div" style={{ backgroundColor: 'black', height: '80vh' }} >
  
 <div className={classes.root}>
-      <Grid container spacing={2}>
+      <Grid container spacing={1}>
+      <Grid item xs={12} >
+          <Paper className={classes.paper}>
+           <h2>Manage Media</h2>
+          </Paper>
+        </Grid>
+
         <Grid item xs={12}>
           <Paper className={classes.paper}>
 
