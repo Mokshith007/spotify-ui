@@ -16,7 +16,7 @@ class SearchBar extends React.Component<SearchModel> {
             <form>
                 <input 
                     type="text" 
-                    placeholder="Search..." 
+                    placeholder="Track or Artist name" 
                     value={this.props.searchText} 
                     onChange={this.handleSearchTextChange}
                 />
