@@ -30,7 +30,7 @@ class TrackSearch extends React.Component<{}, { searchText: string, tracks: Arra
     handleSearchTextChange(searchText: string) {
         this.setState({
             searchText: searchText
-        })
+        });
         this.searchTracks(searchText);
     }
 
@@ -47,9 +47,11 @@ class TrackSearch extends React.Component<{}, { searchText: string, tracks: Arra
                         searchedTracks = searchedTracksByTrackName.concat(searchedTracksByArtistName);
                         const arr = searchedTracks.map((track) => track.trackId);
                         searchedTracks = searchedTracks.filter(({trackId}, index) => !arr.includes(trackId, index + 1));
-                        this.setState({ 
-                            tracks: searchedTracks
-                        });
+                        setTimeout(() => { 
+                            this.setState({ 
+                                tracks: searchedTracks
+                            });
+                        }, searchText.length*1000);
                     })
                     .catch(error => {
                         console.log("Error occurred while fetching song by name",error);
