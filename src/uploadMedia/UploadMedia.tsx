@@ -1,161 +1,106 @@
 import React, { FC } from 'react';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import Button from '@material-ui/core/Button';
-import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
-import ReactJWPlayer from 'react-jw-player';
-import Paper from "@material-ui/core/Paper";
-import Grid from "@material-ui/core/Grid";
-import Typography from '@material-ui/core/Typography';
-import Container from '@material-ui/core/Container';
-
-interface IPost {
-  returnMessage: string;
-}
-const defaultPosts:IPost[] = [];
+import { AzureMP } from 'react-azure-mp'
+import { useState } from 'react';
+import '../App.css';
 
 
-
-const useStyles = makeStyles((theme) => ({
-  button: {
-    margin: theme.spacing(1),
-  },
-  root: {
-    flexGrow: 1
-  },
-  paper: {
-    padding: theme.spacing(2),
-    textAlign: "center",
-    color: theme.palette.text.secondary
-  },
-  video: {
-    height: 500
-  }
-}
-));
-const UploadMedia: FC = () => {
-  const classes = useStyles();
-  const [fileSelected, setFileSelected] = React.useState<File>();
-
-  const [posts, setPosts]: [IPost[], (posts: IPost[]) => void] = React.useState(defaultPosts);
-  const [loading, setLoading]: [boolean, (loading: boolean) => void] = React.useState<boolean>(true);
-  const [error, setError]: [string, (error: string) => void] = React.useState("");
-  const [uploadStatus, setUploadStatus]: [boolean, (loading: boolean) => void] = React.useState<boolean>(false);
-
+const UploadMedia = () => {
+  const [fileSelected, setFileSelected] = useState<File>();
+  const [publicUrl, setPublicUrl] = useState<string>();
+  const [restrictedUrl, setRestrictedUrl] = useState<string>();
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState("");
+  const [uploadStatus, setUploadStatus] = useState<boolean>(false);
 
   const handleFileChange = function (e: React.ChangeEvent<HTMLInputElement>) {
     const fileList = e.target.files;
     if (!fileList) return;
     setFileSelected(fileList[0]);
   };
-  
-  const uploadFile = function (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) {
-    if(fileSelected){
-      setLoading(true);
-      setUploadStatus(true);
-    const formData = new FormData();
-    formData.append("file", fileSelected);
-    axios
-    .post<IPost[]>("http://managemedia.eastus.azurecontainer.io:8080/media", formData,{
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      },
-    }) 
-    .then(response => {
-      setPosts(response.data);
-      setLoading(false);
-      setUploadStatus(false);
-      console.log("success! " +posts);
-    })
-    .catch(ex => {
-      const error =
-      ex.response.status === 404
-        ? "Resource Not found"
-        : "An unexpected error has occurred";
-      setError(error);
-      setLoading(false);
-      setUploadStatus(false);
 
-      console.log("Error "+ error); 
-    });
+  const uploadFile = function (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) {
+    if (fileSelected) {
+      setLoading(true);
+      const formData = new FormData();
+      formData.append("file", fileSelected);
+      axios
+        .post<string[]>("http://managemedia.eastus.azurecontainer.io:8080/mediaWithSAS", formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          },
+        })
+        .then(response => {
+          setRestrictedUrl(response.data[0]);
+          setPublicUrl(response.data[1]);
+          setLoading(false);
+          setUploadStatus(true);
+        })
+        .catch(ex => {
+          const error =
+            ex.response.status === 404
+              ? "Resource Not found"
+              : "An unexpected error has occurred";
+          setError(error);
+          setLoading(false);
+          setUploadStatus(false);
+
+          console.log("Error " + error);
+        });
     }
   }
- 
 
   return (
     <>
-      <Container maxWidth="md" style={{ backgroundColor: 'black', paddingTop: 30}}>
-        <Typography component="div" style={{ backgroundColor: 'black', height: '80vh' }} >
- 
-<div className={classes.root}>
-      <Grid container spacing={1}>
-      <Grid item xs={12} >
-          <Paper className={classes.paper}>
-           <h2>Manage Media</h2>
-          </Paper>
-        </Grid>
 
-        <Grid item xs={12}>
-          <Paper className={classes.paper}>
+      <div className="App">
+        <h1>Video Publishing</h1>
+        <br />
 
-          <label htmlFor="photo">
-            <input
-              accept="audio/*,video/*"
-              id="photo"
-              name="photo"
-              type="file"
-              multiple={false}
-              onChange={handleFileChange}
-            />
- </label>
-      <Button
-        variant="contained"
-        color="secondary"
-        className={classes.button}
-        startIcon={<CloudUploadIcon />}
-        onClick={uploadFile}
-      >
-        Upload
-      </Button>
-         
-         
-           
-          </Paper>
-        </Grid>
-        <Grid item xs={12} className={classes.video} >
-          <Paper className={classes.paper}>
-            <div className={classes.video} style={{display: posts[0] ? "block" : "none"}}>
-          <ReactJWPlayer
-            playerId='my-unique-id'
-            playerScript='https://cdn.jwplayer.com/libraries/iA1Ait6L.js'
-            file={posts}
+        <label htmlFor="photo">
+          <input
+            accept="audio/*,video/*"
+            id="photo"
+            name="photo"
+            type="file"
+            multiple={false}
+            onChange={handleFileChange}
           />
+        </label>
+        <Button
+          variant="contained"
+          color="secondary"
+          startIcon={<CloudUploadIcon />}
+          onClick={uploadFile}
+        >
+          Upload
+      </Button>
+
+      </div>
+
+      {loading ? <h1 className="loadingclass"> Loading ...</h1> : <br />}
+
+      {!loading && uploadStatus ?
+        <div>
+          <div className="videoBox">
+            <h1>MNPI</h1>
+            <AzureMP
+              src={[{ src: restrictedUrl, type: "application/vnd.ms-sstr+xml" }]}
+            />
           </div>
-          </Paper>
-        </Grid>
-        <Grid item xs={12}>
-          <Paper className={classes.paper}>
 
-          <div style={{display: loading && uploadStatus ? "block" : "none"}}>
-       <h4>Loading ...</h4>
-            </div>  
-            <div style={{display: loading ? "none" : "block"}}>
-              {posts ? <h4>Success!</h4> : <h4>Error</h4>}
-      
-
-  
-            </div> 
-          
-          
-          </Paper>
-        </Grid>
-       
-      </Grid>
-    </div>
-    </Typography>
-    </Container>  
+          <div className="videoBox">
+            <h1>Published</h1>
+            <AzureMP
+              src={[{ src: publicUrl, type: "application/vnd.ms-sstr+xml" }]}
+            />
+          </div>
+        </div>
+        : <br />}
     </>
-  );
+  )
 
 }
 

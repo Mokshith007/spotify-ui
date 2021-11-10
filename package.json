@@ -15,6 +15,7 @@
     "axios": "^0.21.1",
     "bootstrap": "^4.6.0",
     "react": "^17.0.2",
+    "react-azure-mp": "^1.0.5",
     "react-bootstrap": "^1.0.0-beta.16",
     "react-dom": "^17.0.2",
     "react-jw-player": "^1.19.1",
