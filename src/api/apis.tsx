@@ -3,8 +3,11 @@ class Api{
 	getAllTracks(){
         return fetch('http://spotifytracks.eastus.azurecontainer.io:8080/getTracks');
     }
-    getTracksByName(name:String){
-        return fetch('http://spotifytracks.eastus.azurecontainer.io:8080/track/search/findByTrackNameLike?name='+name)
+    getTracksByTrackName(name: string){
+        return fetch('http://spotifytracks.eastus.azurecontainer.io:8080/track/search/findByTrackNameLike?name='+ encodeURIComponent(name));
+    }
+    getTracksByArtistName(name: string){
+        return fetch('http://spotifytracks.eastus.azurecontainer.io:8080/track/search/findByArtistNameLike?name='+ encodeURIComponent(name));
     }
 }
 
