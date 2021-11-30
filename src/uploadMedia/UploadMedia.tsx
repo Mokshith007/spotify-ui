@@ -27,7 +27,7 @@ const UploadMedia = () => {
       const formData = new FormData();
       formData.append("file", fileSelected);
       axios
-        .post<string[]>("http://managemedia.eastus.azurecontainer.io:8080/mediaWithSAS", formData, {
+        .post<string[]>("https://app-managemedia.azurewebsites.net/mediaWithSAS", formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
           },
