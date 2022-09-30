@@ -5,7 +5,10 @@ import axios from 'axios';
 import { AzureMP } from 'react-azure-mp'
 import { useState } from 'react';
 import '../App.css';
+import './MediaWithCC.css'
+import "bootstrap/dist/css/bootstrap.min.css";
 import ReactJWPlayer from 'react-jw-player';
+import { Spinner } from 'react-bootstrap';
 
 const MediaWithCC = () => {
   const [fileSelected, setFileSelected] = useState<File>();
@@ -54,31 +57,43 @@ const MediaWithCC = () => {
     <>
 
       <div className="App">
-        <h1>Video Publishing - Accessibility day</h1>
-        <br />
-
-        <label htmlFor="photo">
+      <h1>Publish Your Media</h1>
+      <div className="form-gorup">
+          <label htmlFor="photo" className="file-upload">
           <input
             accept="audio/*,video/*"
             id="photo"
             name="photo"
             type="file"
             multiple={false}
-            onChange={handleFileChange}
-          />
+            onChange={handleFileChange}/>
+            <div className="file-custom">{ fileSelected?.name || 'Choose a media file..'}</div>
         </label>
-        <Button
-          variant="contained"
-          color="secondary"
-          startIcon={<CloudUploadIcon />}
-          onClick={uploadFile}
-        >
-          Upload
-        </Button>
+        </div>
+        <div className="form-gorup">
+          <div className="select-wrapper">
+            <select>
+              <option value="english">English</option>
+              <option value="japanese">Japanese</option>
+            </select>
+          </div>
+        </div>
+        <div className="button-wrapper">
+          <Button
+            variant="contained"
+            color="secondary"
+            startIcon={<CloudUploadIcon />}
+            onClick={uploadFile}
+            disabled={loading || !fileSelected?.name}>
+            Upload
+          </Button>
+          {loading && <Spinner animation="border"/>}
+        </div>
+        
 
       </div>
 
-      {loading ? <h1 className="loadingclass"> Loading ...</h1> : <br />}
+      {/* {loading ? <h1 className="loadingclass"> Loading ...</h1> : <br />} */}
 
       {!loading && uploadStatus ?
         <div>
