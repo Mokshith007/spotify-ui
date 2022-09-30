@@ -1,8 +1,7 @@
-import React, { FC } from 'react';
+import React from 'react';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
-import { AzureMP } from 'react-azure-mp'
 import { useState } from 'react';
 import '../App.css';
 import './MediaWithCC.css'
@@ -17,7 +16,7 @@ const MediaWithCC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState("");
   const [uploadStatus, setUploadStatus] = useState<boolean>(false);
-  const playlist = [{
+ /* const playlist = [{
     file: 'https://avmediaservice-usea.streaming.media.azure.net/4b75a665-9675-4b58-a63d-0fceabc519bc/ignite.ism/manifest(format=m3u8-cmaf)',
     image: 'https://avmediaservice-usea.streaming.media.azure.net/4b75a665-9675-4b58-a63d-0fceabc519bc/Thumbnail000001.jpg',
     tracks: [{
@@ -26,7 +25,7 @@ const MediaWithCC = () => {
       kind: 'captions',
       'default': true
     }]
-  }];
+  }]; */
   const handleFileChange = function (e: React.ChangeEvent<HTMLInputElement>) {
     const fileList = e.target.files;
     if (!fileList) return;
@@ -51,11 +50,11 @@ const MediaWithCC = () => {
           setUploadStatus(true);
         })
         .catch(ex => {
-          const error =
+          const err =
             ex.response.status === 404
               ? "Resource Not found"
               : "An unexpected error has occurred";
-          setError(error);
+          setError(err);
           setLoading(false);
           setUploadStatus(false);
 
@@ -112,7 +111,7 @@ const MediaWithCC = () => {
                 <ReactJWPlayer
                   playerId='my-unique-id'
                   playerScript='https://cdn.jwplayer.com/libraries/iA1Ait6L.js'
-                  playlist={playlist}
+                  playlist={publicUrl}
                   isAutoPlay={false}
                 />
               </div>

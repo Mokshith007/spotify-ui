@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
@@ -10,7 +10,7 @@ import '../App.css';
 
 const UploadMedia = () => {
   const [fileSelected, setFileSelected] = useState<File>();
-  const [publicUrl, setPublicUrl] = useState<string>();
+  //const [publicUrl, setPublicUrl] = useState<string>();
   const [restrictedUrl, setRestrictedUrl] = useState<string>();
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState("");
@@ -29,23 +29,23 @@ const UploadMedia = () => {
       const formData = new FormData();
       formData.append("file", fileSelected);
       axios
-        .post<string>("https://app-managemedia.azurewebsites.net/media", formData, {
+        .post<string>("https://app-managemedia.azurewebsites.net/mediaWithSAS", formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
           },
         })
         .then(response => {
           setRestrictedUrl(response.data);
-          // setPublicUrl(response.data[1]);
+          //setPublicUrl(response.data[1]);
           setLoading(false);
           setUploadStatus(true);
         })
         .catch(ex => {
-          const error =
+          const err =
             ex.response.status === 404
               ? "Resource Not found"
               : "An unexpected error has occurred";
-          setError(error);
+          setError(err);
           setLoading(false);
           setUploadStatus(false);
 
@@ -68,7 +68,7 @@ const UploadMedia = () => {
               type="file"
               multiple={false}
               onChange={handleFileChange}/>
-            <div className="file-custom">{ fileSelected && fileSelected[0]?.name || 'Choose a media file..'}</div>
+            <div className="file-custom">{ fileSelected && fileSelected[0]?.name}</div>
           </label>
         </div>
         <div className="form-gorup">
