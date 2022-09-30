@@ -3,6 +3,7 @@ import './App.css';
 import TrackSearch from './tracksearch/TrackSearch'
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import UploadMedia from './uploadMedia/UploadMedia';
+import MediaWithCC from './uploadMedia/MediaWithCC';
 
 function App(props:any) {
   return (
@@ -10,8 +11,11 @@ function App(props:any) {
     <Router>
     <div>
       <Switch>
-        <Route path="/media">
+        <Route path="/mediawithSAS">
           <AddMedia />
+        </Route>
+        <Route path="/media">
+          <MediaWithCC />
         </Route>
         <Route path="/">
           <Home />
