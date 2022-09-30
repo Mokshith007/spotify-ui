@@ -14,10 +14,10 @@ function App(props:any) {
         <Route path="/mediawithSAS">
           <AddMedia />
         </Route>
-        <Route path="/media">
+        <Route path="/">
           <MediaWithCC />
         </Route>
-        <Route path="/">
+        <Route path="/spotify">
           <Home />
         </Route>
       </Switch>
