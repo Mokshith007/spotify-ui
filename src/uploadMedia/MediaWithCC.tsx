@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
@@ -19,6 +19,9 @@ const MediaWithCC = () => {
   const [captions, setCaptions] = useState<string[]>();
   const [transcript, setTranscript] = useState<string[]>([]);
 
+  useEffect(() => {
+    loadCaptions();
+  }, [captions]);
 
   const handleFileChange = function (e: React.ChangeEvent<HTMLInputElement>) {
     const fileList = e.target.files;
@@ -29,22 +32,23 @@ const MediaWithCC = () => {
   const getCaptions = function (captionUrl: string) {
     const promise = new Promise<string>((resolve) => { fetch(captionUrl).then(r => r.text()).then(t => resolve(t)) });
     promise.then(textData => setCaptions(textData.split('\r\n\r\n')));
-    loadCaptions();
+
   };
 
 
   const loadCaptions = function () {
-    var h = [];
+    let h: string[] = [];
     var section = "";
     if (captions) {
       captions.forEach((caption, i) => {
 
         if ((i > 6) && (!caption.startsWith('NOTE Confidence:'))) {
           section = caption.slice(29);
-          transcript.push(section);
+          h.push(section);
 
         }
       });
+      setTranscript(h);
     }
   };
   // by dipanakr end

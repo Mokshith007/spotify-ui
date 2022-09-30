@@ -27,7 +27,7 @@
     padding: 0;
     background: none;
     text-align: center;
-    height: 100vh; 
+    height: 100%; 
     width: 100%;
 }
 .App h1 {
@@ -149,7 +149,7 @@
     height: auto;
 }
 
-transcript > div {
+.transcript > div {
     display: inline;
     padding-right: 5px;
 }
