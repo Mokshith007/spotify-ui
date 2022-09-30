@@ -1,0 +1,142 @@
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+@font-face {
+    font-family: GentiumPlus;
+    src: url('../assets//fonts/GentiumPlus-Regular.ttf');
+}
+
+.form-gorup {
+    margin-bottom: 10px;
+}
+
+.App {
+    font-family: GentiumPlus, serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: none;
+    border-radius: 0;
+    margin: 0;
+    padding: 0;
+    background: none;
+    text-align: center;
+    height: 100vh; 
+    width: 100%;
+}
+.App h1 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 20px;
+}
+.file-upload {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    margin: 0;
+}
+
+.file-upload input {
+    opacity: 0;
+    position: absolute;
+}
+
+.file-custom{
+    display: flex;
+    align-items: center;
+    position: relative;
+    border: 1px solid #cccc;
+    height: 32px;
+    padding: 6px;
+    width: 291px;
+    text-overflow: ellipsis;
+}
+
+.file-custom:before {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 6;
+    display: block;
+    content: "Browse";
+    height: 30px;
+    padding: 10px;
+    line-height: 0.6;
+    color: #555;
+    background-color: #eee;
+}
+
+:root {
+    --select-border: #cccc;
+    --select-arrow: var(--select-border);
+}
+
+.select-wrapper {
+    width: 292px;
+    border: 1px solid var(--select-border);
+    border-radius: 0.25em;
+    cursor: pointer;
+    line-height: 1.4;
+    background-color: #fff;
+    background-image: linear-gradient(to top, #f9f9f9, #fff 33%);
+    display: grid;
+    grid-template-areas: "select";
+    align-items: center;
+    padding-right: 5px;
+}
+
+.select-wrapper::after {
+content: "";
+width: 0.8em;
+height: 0.5em;
+background-color: var(--select-arrow);
+clip-path: polygon(100% 0%, 0 0%, 50% 100%);
+justify-self: end;
+}
+
+.select-wrapper select {
+appearance: none;
+background-color: transparent;
+border: none;
+padding: 0 1em 0 0;
+margin: 0;
+width: 100%;
+font-family: inherit;
+font-size: inherit;
+cursor: inherit;
+line-height: inherit;
+padding: 5px;
+outline: none !important;
+}
+
+.select-wrapper select,
+.select-wrapper:after {
+grid-area: select;
+}
+
+.MuiButton-containedSecondary {
+background-color: #0070af !important;
+padding: 5px 10px !important;
+}
+.MuiButton-label {
+line-height: 1;
+}
+
+.button-wrapper {
+    position: relative;
+}
+
+.spinner-border{
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #fff;
+    border-right-color: transparent;
+    top: 4px;
+    right: 5px;
+}
