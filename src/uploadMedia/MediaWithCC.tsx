@@ -17,7 +17,16 @@ const MediaWithCC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState("");
   const [uploadStatus, setUploadStatus] = useState<boolean>(false);
-
+  const playlist = [{
+    file: 'https://avmediaservice-usea.streaming.media.azure.net/4b75a665-9675-4b58-a63d-0fceabc519bc/ignite.ism/manifest(format=m3u8-cmaf)',
+    image: 'https://avmediaservice-usea.streaming.media.azure.net/4b75a665-9675-4b58-a63d-0fceabc519bc/Thumbnail000001.jpg',
+    tracks: [{
+      file: 'https://avmediaservice-usea.streaming.media.azure.net/4b75a665-9675-4b58-a63d-0fceabc519bc/transcript.vtt',
+      label: 'English',
+      kind: 'captions',
+      'default': true
+    }]
+  }];
   const handleFileChange = function (e: React.ChangeEvent<HTMLInputElement>) {
     const fileList = e.target.files;
     if (!fileList) return;
@@ -63,58 +72,53 @@ const MediaWithCC = () => {
     <>
 
       <div className="App">
-      <h1>Publish Your Media</h1>
-      <div className="form-gorup">
-          <label htmlFor="photo" className="file-upload">
-          <input
-            accept="audio/*,video/*"
-            id="photo"
-            name="photo"
-            type="file"
-            multiple={false}
-            onChange={handleFileChange}/>
-            <div className="file-custom">{ fileSelected?.name || 'Choose a media file..'}</div>
-        </label>
-        </div>
+        <h1>Publish Your Media</h1>
         <div className="form-gorup">
-          <div className="select-wrapper">
-            <select onChange={handleLanguageSelectionChange}>
-              <option value="en">English</option>
-              <option value="jp">Japanese</option>
-            </select>
+            <label htmlFor="photo" className="file-upload">
+            <input
+              accept="audio/*,video/*"
+              id="photo"
+              name="photo"
+              type="file"
+              multiple={false}
+              onChange={handleFileChange}/>
+              <div className="file-custom">{ fileSelected?.name || 'Choose a media file..'}</div>
+          </label>
           </div>
-        </div>
-        <div className="button-wrapper">
-          <Button
-            variant="contained"
-            color="secondary"
-            startIcon={<CloudUploadIcon />}
-            onClick={uploadFile}
-            disabled={loading || !fileSelected?.name}>
-            Upload
-          </Button>
-          {loading && <Spinner animation="border"/>}
-        </div>
-        
-
+          <div className="form-gorup">
+            <div className="select-wrapper">
+              <select onChange={handleLanguageSelectionChange}>
+                <option value="" disabled selected>Select language</option>
+                <option value="en">English</option>
+                <option value="jp">Japanese</option>
+              </select>
+            </div>
+          </div>
+          <div className="button-wrapper">
+            <Button
+              variant="contained"
+              color="secondary"
+              startIcon={<CloudUploadIcon />}
+              onClick={uploadFile}
+              disabled={loading}>
+              Upload
+            </Button>
+            {loading && <Spinner animation="border"/>}
+          </div>
+          {
+           !loading && uploadStatus &&
+            <div>
+              <div className="videoBox">
+                <ReactJWPlayer
+                  playerId='my-unique-id'
+                  playerScript='https://cdn.jwplayer.com/libraries/iA1Ait6L.js'
+                  playlist={playlist}
+                  isAutoPlay={false}
+                />
+              </div>
+            </div>
+            }
       </div>
-
-      {/* {loading ? <h1 className="loadingclass"> Loading ...</h1> : <br />} */}
-
-      {!loading && uploadStatus ?
-        <div>
-          <div className="videoBox">
-
-
-            <ReactJWPlayer
-              playerId='my-unique-id'
-              playerScript='https://cdn.jwplayer.com/libraries/iA1Ait6L.js'
-              file={publicUrl}
-            />
-          </div>
-
-        </div>
-        : <br />}
     </>
   )
 
