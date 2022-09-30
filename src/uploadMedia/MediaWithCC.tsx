@@ -16,11 +16,38 @@ const MediaWithCC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState("");
   const [uploadStatus, setUploadStatus] = useState<boolean>(false);
+  const [captions, setCaptions] = useState<string[]>();
+  const [transcript, setTranscript] = useState<string[]>([]);
+
+
   const handleFileChange = function (e: React.ChangeEvent<HTMLInputElement>) {
     const fileList = e.target.files;
     if (!fileList) return;
     setFileSelected(fileList[0]);
   };
+  // by dipanakr start
+  const getCaptions = function (captionUrl: string) {
+    const promise = new Promise<string>((resolve) => { fetch(captionUrl).then(r => r.text()).then(t => resolve(t)) });
+    promise.then(textData => setCaptions(textData.split('\r\n\r\n')));
+    loadCaptions();
+  };
+
+
+  const loadCaptions = function () {
+    var h = [];
+    var section = "";
+    if (captions) {
+      captions.forEach((caption, i) => {
+
+        if ((i > 6) && (!caption.startsWith('NOTE Confidence:'))) {
+          section = caption.slice(29);
+          transcript.push(section);
+
+        }
+      });
+    }
+  };
+  // by dipanakr end
 
   const uploadFile = function (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) {
     if (fileSelected) {
@@ -43,6 +70,9 @@ const MediaWithCC = () => {
             eval('tmp[0].image="../audio_thumbnail.png"');
           }
           setPlayList(tmp);
+          const vttPath = eval('tmp[0].tracks[0].file');
+          getCaptions(vttPath);
+
           setLoading(false);
           setUploadStatus(true);
         })
@@ -101,8 +131,7 @@ const MediaWithCC = () => {
           </Button>
           {loading && <Spinner animation="border" />}
         </div>
-        {
-          !loading && uploadStatus &&
+        {!loading && uploadStatus &&
           <div>
             <div className="videoBox">
               <ReactJWPlayer
@@ -113,6 +142,9 @@ const MediaWithCC = () => {
               />
             </div>
           </div>
+        }
+        {!loading && uploadStatus && <div className="transcript"> {transcript.map((caption) => <div>{caption}</div>)}</div>}
+
       </div>
     </>
   )
