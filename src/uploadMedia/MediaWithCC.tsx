@@ -12,6 +12,7 @@ import { Spinner } from 'react-bootstrap';
 
 const MediaWithCC = () => {
   const [fileSelected, setFileSelected] = useState<File>();
+  const [languageSelected, setLanguageSelected] = useState<string>('en');
   const [publicUrl, setPublicUrl] = useState<string>();
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState("");
@@ -28,6 +29,7 @@ const MediaWithCC = () => {
       setLoading(true);
       const formData = new FormData();
       formData.append("file", fileSelected);
+      formData.append("lang", languageSelected);
       axios
         .post<string>("https://app-managemedia.azurewebsites.net/media", formData, {
           headers: {
@@ -53,6 +55,10 @@ const MediaWithCC = () => {
     }
   }
 
+  const handleLanguageSelectionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setLanguageSelected(e.target.value);
+  }
+
   return (
     <>
 
@@ -72,9 +78,9 @@ const MediaWithCC = () => {
         </div>
         <div className="form-gorup">
           <div className="select-wrapper">
-            <select>
-              <option value="english">English</option>
-              <option value="japanese">Japanese</option>
+            <select onChange={handleLanguageSelectionChange}>
+              <option value="en">English</option>
+              <option value="jp">Japanese</option>
             </select>
           </div>
         </div>
