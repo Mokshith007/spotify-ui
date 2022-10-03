@@ -1,3 +1,4 @@
+/* eslint no-eval: 0 */
 import React, { useEffect } from 'react';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import Button from '@material-ui/core/Button';
@@ -20,6 +21,21 @@ const MediaWithCC = () => {
   const [transcript, setTranscript] = useState<string[]>([]);
 
   useEffect(() => {
+    const loadCaptions = function () {
+      let h: string[] = [];
+      var section = "";
+      if (captions) {
+        captions.forEach((caption, i) => {
+
+          if ((i > 6) && (!caption.startsWith('NOTE Confidence:'))) {
+            section = caption.slice(29);
+            h.push(section);
+
+          }
+        });
+        setTranscript(h);
+      }
+    };
     loadCaptions();
   }, [captions]);
 
@@ -35,22 +51,6 @@ const MediaWithCC = () => {
 
   };
 
-
-  const loadCaptions = function () {
-    let h: string[] = [];
-    var section = "";
-    if (captions) {
-      captions.forEach((caption, i) => {
-
-        if ((i > 6) && (!caption.startsWith('NOTE Confidence:'))) {
-          section = caption.slice(29);
-          h.push(section);
-
-        }
-      });
-      setTranscript(h);
-    }
-  };
   // by dipanakr end
 
   const uploadFile = function (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) {
@@ -67,7 +67,6 @@ const MediaWithCC = () => {
         })
         .then(response => {
           console.log(response.data);
-          const playerConfig: any = response.data;
           let tmp = response.data;
           eval('tmp[0].image="../audio_thumbnail.png"');
           if (fileSelected.name.toLowerCase().indexOf('audio') >= 0) {
@@ -81,15 +80,11 @@ const MediaWithCC = () => {
           setUploadStatus(true);
         })
         .catch(ex => {
-          const err =
-            ex.response.status === 404
-              ? "Resource Not found"
-              : "An unexpected error has occurred";
-          setError(err);
+          const errMsg = "An unexpected error has occurred, please try again!";
+          setError(errMsg);
           setLoading(false);
           setUploadStatus(false);
-
-          console.log("Error " + error);
+          console.log("Error " + errMsg);
         });
     }
   }
@@ -148,7 +143,7 @@ const MediaWithCC = () => {
           </div>
         }
         {!loading && uploadStatus && <div className="transcript"> {transcript.map((caption) => <div>{caption}</div>)}</div>}
-
+        {!loading && !error && <div className='error-msg'>{error} </div>}
       </div>
     </>
   )
