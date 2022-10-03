@@ -130,7 +130,7 @@ const MediaWithCC = () => {
           {loading && <Spinner animation="border" />}
         </div>
         {!loading && uploadStatus &&
-          <div className="d-flex justify-content-center align-items-center mt-3">
+          <div className="d-flex justify-content-center align-items-start mt-3">
             <div className="videoBox">
               <ReactJWPlayer
                 playerId='my-unique-id'

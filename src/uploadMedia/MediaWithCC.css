@@ -146,7 +146,7 @@
 
 .videoBox {
     width: 800px;
-    height: 400px;
+    height: auto;
     margin: 0;
     padding: 0;
     box-shadow: none;
@@ -157,10 +157,6 @@
     padding-right: 5px;
 }
 
-#my-unique-id {
-    height: 400px !important;
-}
-
 .transcript {
     box-shadow: 0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%);
     border-radius: 5px;
@@ -168,7 +164,7 @@
     background: #dee2e6;
     font-family: sans-serif;
     overflow-y: auto;
-    height: 396px;
+    height: 360px;
     width: 300px;
     text-align: left;
 }
