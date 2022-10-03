@@ -67,9 +67,8 @@ const MediaWithCC = () => {
         })
         .then(response => {
           console.log(response.data);
-          let tmp = response.data;
-          eval('tmp[0].image="../audio_thumbnail.png"');
-          if (fileSelected.name.toLowerCase().indexOf('audio') >= 0) {
+          let tmp = response.data;         
+          if (fileSelected.name.toLowerCase().indexOf('audio') >= 0 || fileSelected.name.toLowerCase().indexOf('.mp3') >= 0) {
             eval('tmp[0].image="../audio_thumbnail.png"');
           }
           setPlayList(tmp);
@@ -143,7 +142,7 @@ const MediaWithCC = () => {
             <div className="transcript ml-2"> {transcript.map((caption) => <div>{caption}</div>)}</div>
           </div>
         }
-        {!loading && !error && <div className='error-msg'>{error} </div>}
+        {!loading && error && <div className='error-msg'>{error} </div>}
       </div>
     </>
   )
