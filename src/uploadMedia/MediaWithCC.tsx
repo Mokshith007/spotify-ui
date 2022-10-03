@@ -131,7 +131,7 @@ const MediaWithCC = () => {
           {loading && <Spinner animation="border" />}
         </div>
         {!loading && uploadStatus &&
-          <div>
+          <div className="d-flex justify-content-center align-items-center mt-3">
             <div className="videoBox">
               <ReactJWPlayer
                 playerId='my-unique-id'
@@ -140,9 +140,9 @@ const MediaWithCC = () => {
                 isAutoPlay={false}
               />
             </div>
+            <div className="transcript ml-2"> {transcript.map((caption) => <div>{caption}</div>)}</div>
           </div>
         }
-        {!loading && uploadStatus && <div className="transcript"> {transcript.map((caption) => <div>{caption}</div>)}</div>}
         {!loading && !error && <div className='error-msg'>{error} </div>}
       </div>
     </>

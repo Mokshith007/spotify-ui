@@ -146,12 +146,19 @@
 
 .videoBox {
     width: 800px;
-    height: auto;
+    height: 400px;
+    margin: 0;
+    padding: 0;
+    box-shadow: none;
 }
 
 .transcript > div {
     display: inline;
     padding-right: 5px;
+}
+
+#my-unique-id {
+    height: 400px !important;
 }
 
 .transcript {
@@ -161,10 +168,9 @@
     background: #dee2e6;
     font-family: sans-serif;
     overflow-y: auto;
-    height: 300px;
-    width: 800px;
+    height: 396px;
+    width: 300px;
     text-align: left;
-    margin-bottom: 20px;
 }
 .error-msg{
     color: red;
