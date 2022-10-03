@@ -143,7 +143,7 @@ const MediaWithCC = () => {
             <div className="transcript ml-2"> {transcript.map((caption) => <div>{caption}</div>)}</div>
           </div>
         }
-        {!loading && !error && <div className='error-msg'>{error} </div>}
+        {!loading && error && <div className='error-msg'>{error} </div>}
       </div>
     </>
   )
